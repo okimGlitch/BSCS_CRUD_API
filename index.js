@@ -20,7 +20,7 @@ const connection = mysql.createConnection({
     host: "be1ekntamejhebinvqau-mysql.services.clever-cloud.com",
     user: "be1ekntamejhebinvqau",
     password: "wFXPMK7dzdY2NFaCgIDL",
-    database: "employee",
+    database: "be1ekntamejhebinvqau",
 });
 
 //initilization of connection
