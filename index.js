@@ -96,7 +96,7 @@ app.use(express.urlencoded({ extended: false }));
 app.delete("/api/members", (req, res) =>{
     const id=req.body.id;
     connection.query(`DELETE FROM userdata WHERE id='${id}'`, (err, rows, fields)=>{
-        if(err) throw err;
+        if(err) throw err
         res.json({msg: `Successfully deleted!`})
     })
 })
