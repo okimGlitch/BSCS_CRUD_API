@@ -2,25 +2,26 @@
 //import express API framework
 const express = require("express")
 const app = express();
-const moment = require ('moment')
+const moment = require('moment')
 //importing mysql
 const mysql = require("mysql")
+const cors = require('cors')
 //port number
 const PORT = process.env.PORT || 5000;
 
-const logger = (req,res, next) => {
-   
-    console.log(`${req.protocol}://${req.get('host')}${req.originalUrl} : ${moment().format()}`)
+const logger = (req, res, next) =>{
+    console.log(`${req.protocol}://${req.get('host')}${req.originalUrl}:${moment().format()} `)
     next()
 }
-app.use(logger)
 
+app.use(logger)
+app.use(cors())
 //connection to mysql
 const connection = mysql.createConnection({
-    host:"be1ekntamejhebinvqau-mysql.services.clever-cloud.com",
-    user:"urk1a1cxqqrqnur0",
-    password:"wFXPMK7dzdY2NFaCgIDL",
-    database:"be1ekntamejhebinvqau",
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "employee",
 });
 
 //initilization of connection
@@ -85,14 +86,14 @@ app.put("/api/members", (req, res) => {
   connection.query(
     `UPDATE userdata SET first_name='${fname}', last_name='${lname}', email='${email}', gender='${gender}' WHERE id='${id}'`,
     (err, rows, fields) => {
-      if (err) throw err;
+      if (err) throw err; 
       res.json({ msg: `Successfully updated!` });
     }
   );
 });
 
 //DELETE API
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false}));
 app.delete("/api/members", (req, res) =>{
     const id=req.body.id;
     connection.query(`DELETE FROM userdata WHERE id='${id}'`, (err, rows, fields)=>{
@@ -100,8 +101,6 @@ app.delete("/api/members", (req, res) =>{
         res.json({msg: `Successfully deleted!`})
     })
 })
-
-
 
 
 app.listen(5000, () => {
